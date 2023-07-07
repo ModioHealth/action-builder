@@ -1,0 +1,52 @@
+name: 'Builder'
+description: 'This is the default build action for a standard application service. See README for more details.'
+author: 'MH'
+inputs:
+  basePath:
+    description: 'Base path to the application code (defaults to ".")'
+    required: true
+    default: '.'
+  testEnabled:
+    description: 'Run tests (defaults to true)'
+    required: true
+    default: 'true'
+  testAction:
+    description: "Default test action (defaults to 'ci:test')"
+    required: true
+    default: ci:test
+  buildEnabled:
+    description: 'Run build (defaults to true)'
+    required: true
+    default: 'true'
+  buildAction:
+    description: "Default build action (defaults to 'ci:build')"
+    required: true
+    default: ci:build
+  pushEnabled:
+    description: 'Push image to repository (defaults to true)'
+    required: true
+    default: 'true'
+  dockerServiceName:
+    description: 'Docker compose service name to be built'
+    required: true
+  dockerRepository:
+    description: 'Docker repository to push to'
+    required: true
+  deployEnabled:
+    description: 'Perform GitHub deployment for the built container (false by default)'
+    required: false
+    default: 'false'
+  deployApps:
+    description: 'Apps to deploy with this build (comma separated).'
+    required: false
+  githubToken:
+    description: 'GitHub token'
+    required: true
+outputs:
+  dockerTag:
+    description: 'Pushed docker tag (deployed to dockerRepository)'
+  deploymentIds:
+    description: 'Deployment ids (if deployEnabled is set to true, comma separated)'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
